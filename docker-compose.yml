@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  db:
+    platform: linux/x86_64
+    image: mysql
+    container_name: stonks_mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+    ports: 
+      - "3306:3306"
+    volumes:
+      - stonks_data:/var/lib/mysql
+  stock-manager:
+    platform: linux/x86_64
+    image: lucasvilela/stock-manager
+    ports: 
+      - "8080:8080"
+    volumes:
+      - stock_data:/var/lib/stock
+
+volumes:
+  stonks_data:
+  stock_data:
