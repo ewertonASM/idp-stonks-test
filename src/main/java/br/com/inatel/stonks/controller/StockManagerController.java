@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.inatel.stonks.client.StockClient;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
+import br.com.inatel.stonks.model.Quotes;
+import br.com.inatel.stonks.model.QuotesTest;
 import br.com.inatel.stonks.model.StockQuote;
 import br.com.inatel.stonks.service.StockQuoteService;
 
@@ -26,7 +28,7 @@ public class StockManagerController {
     private final StockQuoteService stockQuoteService;
 
     @PostMapping
-    public ResponseEntity<StockQuote> createQuote(@RequestBody @Valid StockQuotePostDTO quoteDTO) {
+    public ResponseEntity<QuotesTest> createQuote(@RequestBody @Valid StockQuotePostDTO quoteDTO) {
 
         StockClient.checkStock(quoteDTO.getStockId());
 

@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StockQuotePostDTO {
     
+    private String id;
+
     @NotEmpty(message = "The stock id cannot be empty")
     private String stockId;
 

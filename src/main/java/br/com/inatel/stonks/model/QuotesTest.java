@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CollectionTable;
@@ -12,12 +14,13 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -26,22 +29,21 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Entity
 @Builder
-// @DynamicUpdate
-public class StockQuote {
-
+public class QuotesTest {
+    
     @Id
-	@GeneratedValue(generator="system-uuid")
+    @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@Column(name="STOCK_QUOTE_ID")
     private String id;
-
-    private String stockId;
-
+    
     @ElementCollection
-    @CollectionTable(name="QUOTES", 
-      joinColumns = {@JoinColumn(name = "STOCK_QUOTE_ID", referencedColumnName = "STOCK_QUOTE_ID")})
+    // @CollectionTable(name="QUOTES", 
+    //   joinColumns = {@JoinColumn(name = "STOCK_QUOTE_ID", referencedColumnName = "STOCK_QUOTE_ID")})
     @MapKeyColumn(name = "QUOTE_DATE")
     @Column(name = "QUOTE_VALUE")
     private Map<String, String> quotes;
 
+    @ManyToOne
+    private StockQuoteTest stockQuoteTest;
+    
 }

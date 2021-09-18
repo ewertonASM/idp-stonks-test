@@ -6,11 +6,17 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
+import br.com.inatel.stonks.mapper.QuotesTestMapper;
 import br.com.inatel.stonks.mapper.StockQuoteMapper;
+import br.com.inatel.stonks.mapper.StockTestMapper;
 import br.com.inatel.stonks.model.StockQuote;
+import br.com.inatel.stonks.model.StockQuoteTest;
 import br.com.inatel.stonks.model.Quotes;
+import br.com.inatel.stonks.model.QuotesTest;
+import br.com.inatel.stonks.repository.QuotesRepositoryTest;
 // import br.com.inatel.stonks.repository.QuotesRepository;
 import br.com.inatel.stonks.repository.StockRepository;
+import br.com.inatel.stonks.repository.StockRepositoryTest;
 import br.com.inatel.stonks.view.QuoteView;
 
 import java.util.HashMap;
@@ -23,6 +29,8 @@ import java.util.Optional;
 public class StockQuoteService {
 
     private final StockRepository stockRepository;
+    private final StockRepositoryTest stockRepositoryTest;
+    private final QuotesRepositoryTest quotesRepositoryTest;
     // private final QuotesRepository quotesRepository;
 
 
@@ -45,14 +53,24 @@ public class StockQuoteService {
     //     return QuoteView.generateView(quotes);
     // }
 
-    public StockQuote save(StockQuotePostDTO quoteDTO) {
+    public QuotesTest save(StockQuotePostDTO quoteDTO) {
 
         // Optional<StockQuote> stockId = stockRepository.findByStockId(quoteDTO.getStockId());
 
         // if(stockId.isEmpty()){
+
+        
+        
+        List<StockQuoteTest> stockQuoteTest = stockRepositoryTest.findByStockId(quoteDTO.getStockId());
+
+        if(stockQuoteTest.isEmpty()){
+            stockRepositoryTest.save(StockTestMapper.INSTANCE.toStockQuote(quoteDTO));
+        }
+        
             // }
-            
-        return stockRepository.save(StockQuoteMapper.INSTANCE.toStockQuote(quoteDTO));
+        QuotesTest quoteTest = QuotesTestMapper.INSTANCE.toQuoteTest(quoteDTO);
+        // stockQuote.setId(quoteDTO.getId());
+        return quotesRepositoryTest.save(quoteTest);
             
         // return quoteRepository.save(QuoteMapper.INSTANCE.toQuote(quoteDTO));
         
