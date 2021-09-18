@@ -1,14 +1,15 @@
 package br.com.inatel.stonks.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.inatel.stonks.model.Quote;
+import br.com.inatel.stonks.model.StockQuote;
 
-public interface StockRepository extends JpaRepository<Quote, Long> {
+public interface StockRepository extends JpaRepository<StockQuote, String> {
 
-    List<Quote> findByUserId(Long userId);
-    List<Quote> findByStockId(String stockId);
+    // Optional<StockQuote> findByStockId(String stockId);
+    // List<Quote> findByStockId(String stockId);
 
 }

@@ -1,4 +1,4 @@
-package br.com.inatel.stonks.model;
+package br.com.inatel.stonks.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Stock {
+public class StockDTO {
 
 
     private String id;

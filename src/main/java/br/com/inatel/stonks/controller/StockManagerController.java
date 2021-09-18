@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.inatel.stonks.client.StockClient;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
-import br.com.inatel.stonks.model.Quote;
+import br.com.inatel.stonks.model.StockQuote;
 import br.com.inatel.stonks.service.StockQuoteService;
 
 import java.util.HashMap;
+
 import javax.validation.Valid;
 
 @RestController
@@ -24,27 +25,28 @@ public class StockManagerController {
 
     private final StockQuoteService stockQuoteService;
 
+    @PostMapping
+    public ResponseEntity<StockQuote> createQuote(@RequestBody @Valid StockQuotePostDTO quoteDTO) {
 
-    @PostMapping(path = "/{id}")
-    public ResponseEntity<Quote> createQuote(@PathVariable Long id, @RequestBody @Valid StockQuotePostDTO stockQuotePostDTO) {
+        StockClient.checkStock(quoteDTO.getStockId());
 
-        StockClient.checkStock(stockQuotePostDTO.getStockId());
-        stockQuotePostDTO.setUserId(id);
-        return new ResponseEntity<>(stockQuoteService.save(stockQuotePostDTO), HttpStatus.CREATED);
-
-    }
-
-    @GetMapping(path = "/stock")
-    public ResponseEntity<HashMap<String, HashMap<String, String>>> findByName(@RequestParam String stockId) {
-
-            log.info(stockId);
-            return ResponseEntity.ok(stockQuoteService.findByName(stockId));
-    }
-
-    @GetMapping
-    public ResponseEntity<HashMap<String, HashMap<String, String>>> findByUserId() {
-        return ResponseEntity.ok(stockQuoteService.findByUserId());
+        return new ResponseEntity<>(stockQuoteService.save(quoteDTO), HttpStatus.CREATED);
 
     }
+
+    // @GetMapping(path = "/stock")
+    // public ResponseEntity<HashMap<String, HashMap<String, String>>> findByName(@RequestParam String stockId) {
+
+            
+
+    //         log.info(stockId);
+    //         return ResponseEntity.ok(stockQuoteService.findByName(stockId));
+    // }
+
+    // @GetMapping
+    // public ResponseEntity<HashMap<String, HashMap<String, String>>> findAll() {
+    //     return ResponseEntity.ok(stockQuoteService.findAll());
+
+    // }
 
 }
