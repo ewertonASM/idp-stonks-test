@@ -66,9 +66,11 @@ public class StockQuoteService {
         if(stockQuoteTest.isEmpty()){
             stockRepositoryTest.save(StockTestMapper.INSTANCE.toStockQuote(quoteDTO));
         }
+
         
             // }
         QuotesTest quoteTest = QuotesTestMapper.INSTANCE.toQuoteTest(quoteDTO);
+        quoteTest.setStockQuoteTest(stockQuoteTest.get(0));
         // stockQuote.setId(quoteDTO.getId());
         return quotesRepositoryTest.save(quoteTest);
             

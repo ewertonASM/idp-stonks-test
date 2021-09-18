@@ -34,6 +34,7 @@ public class QuotesTest {
     @Id
     @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
+	// @Column(name="STOCK_QUOTE_ID")
     private String id;
     
     @ElementCollection
@@ -44,6 +45,7 @@ public class QuotesTest {
     private Map<String, String> quotes;
 
     @ManyToOne
+    // @JoinColumn(name = "ID")
     private StockQuoteTest stockQuoteTest;
     
 }

@@ -37,9 +37,11 @@ public class StockQuoteTest {
 	// @Column(name="STOCK_QUOTE_ID")
     private String id;
 
+    @Column(unique = true)
     private String stockId;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany
+    // @JoinColumn(name = "ID")
     private List<QuotesTest> quotesTest;
 
 
