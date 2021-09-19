@@ -6,7 +6,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:mysql://localhost:3306/test17?&createDatabaseIfNotExist=true
+        url: jdbc:mysql://localhost:3306/test32?&createDatabaseIfNotExist=true
         username: root
         password: root
     jpa:

@@ -54,27 +54,21 @@ public class StockQuoteService {
     // }
 
     public QuotesTest save(StockQuotePostDTO quoteDTO) {
+   
+        List<StockQuoteTest> stockQuoteTestList = stockRepositoryTest.findByStockId(quoteDTO.getStockId());
+        StockQuoteTest stockQuoteTest = StockTestMapper.INSTANCE.toStockQuote(quoteDTO);
+        QuotesTest quoteTest = QuotesTestMapper.INSTANCE.toQuoteTest(quoteDTO);      
 
-        // Optional<StockQuote> stockId = stockRepository.findByStockId(quoteDTO.getStockId());
-
-        // if(stockId.isEmpty()){
-
-        
-        
-        List<StockQuoteTest> stockQuoteTest = stockRepositoryTest.findByStockId(quoteDTO.getStockId());
-
-        if(stockQuoteTest.isEmpty()){
-            stockRepositoryTest.save(StockTestMapper.INSTANCE.toStockQuote(quoteDTO));
+        if(stockQuoteTestList.isEmpty()){
+            stockRepositoryTest.save(stockQuoteTest);            
+            quoteTest.setStockQuoteTest(stockQuoteTest);
+        }else{
+            quoteTest.setStockQuoteTest(stockQuoteTestList.get(0));
         }
+                    
 
-        
-            // }
-        QuotesTest quoteTest = QuotesTestMapper.INSTANCE.toQuoteTest(quoteDTO);
-        quoteTest.setStockQuoteTest(stockQuoteTest.get(0));
-        // stockQuote.setId(quoteDTO.getId());
         return quotesRepositoryTest.save(quoteTest);
-            
-        // return quoteRepository.save(QuoteMapper.INSTANCE.toQuote(quoteDTO));
+
         
     }
 

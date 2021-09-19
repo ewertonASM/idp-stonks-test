@@ -8,16 +8,21 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -28,7 +33,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Entity
 @Builder
-@DynamicUpdate
+// @DynamicUpdate
 public class StockQuoteTest {
 
     @Id
@@ -41,7 +46,10 @@ public class StockQuoteTest {
     private String stockId;
 
     @OneToMany
-    // @JoinColumn(name = "ID")
+    @JoinColumn(name = "stockQuoteTestId")
+    @JsonManagedReference
+    // @JsonBackReference
+    // @JoinColumn(name = "QUOTES_TEST_ID")
     private List<QuotesTest> quotesTest;
 
 
