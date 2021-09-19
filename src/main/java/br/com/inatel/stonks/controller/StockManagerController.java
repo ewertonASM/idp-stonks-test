@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.inatel.stonks.client.StockClient;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
+import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 import br.com.inatel.stonks.model.Quotes;
 import br.com.inatel.stonks.model.QuotesTest;
 import br.com.inatel.stonks.model.StockQuote;
@@ -28,12 +29,11 @@ public class StockManagerController {
     private final StockQuoteService stockQuoteService;
 
     @PostMapping
-    public ResponseEntity<QuotesTest> createQuote(@RequestBody @Valid StockQuotePostDTO quoteDTO) {
+    public ResponseEntity<StockQuoteResponseDTO> createQuote(@RequestBody @Valid StockQuotePostDTO stockQuoteDTO) {
 
-        StockClient.checkStock(quoteDTO.getStockId());
+        StockClient.checkStock(stockQuoteDTO.getStockId());
 
-        return new ResponseEntity<>(stockQuoteService.save(quoteDTO), HttpStatus.CREATED);
-
+        return new ResponseEntity<>(stockQuoteService.save(stockQuoteDTO), HttpStatus.CREATED);
     }
 
     // @GetMapping(path = "/stock")

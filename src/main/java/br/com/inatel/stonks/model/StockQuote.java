@@ -24,12 +24,12 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+// @Entity
 @Builder
 // @DynamicUpdate
 public class StockQuote {
 
-    @Id
+  @Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
 	@Column(name="STOCK_QUOTE_ID")

@@ -1,5 +1,7 @@
 package br.com.inatel.stonks.mapper;
 
+import java.util.Map;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -13,6 +15,6 @@ import br.com.inatel.stonks.model.QuotesTest;
 public abstract class QuotesTestMapper {
     
     public static final QuotesTestMapper INSTANCE = Mappers.getMapper(QuotesTestMapper.class);
-    public abstract QuotesTest toQuoteTest(StockQuotePostDTO quoteDTO);
+    public abstract QuotesTest toQuoteTest(Map<String, String> quoteDTO);
 
 }

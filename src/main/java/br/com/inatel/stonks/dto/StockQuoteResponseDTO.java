@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockQuotePostDTO {
+public class StockQuoteResponseDTO {
+    
+    private String id;
 
-    @NotEmpty(message = "The stock id cannot be empty")
     private String stockId;
 
-    @NotEmpty(message = "The quote cannot be empty")
     private Map<String, String> quotes;
     
 }

@@ -23,10 +23,12 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.gson.annotations.SerializedName;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.ManyToAny;
 
 @Data
 @AllArgsConstructor
@@ -39,17 +41,19 @@ public class StockQuoteTest {
     @Id
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	// @Column(name="STOCK_QUOTE_ID")
     private String id;
-
+    
     @Column(unique = true)
     private String stockId;
 
-    @OneToMany
-    @JoinColumn(name = "stockQuoteTestId")
-    @JsonManagedReference
+    // @ElementCollection
+    // @CollectionTable(name="STOCK_QUOTES", 
+    //   joinColumns = {@JoinColumn(name = "STOCK_QUOTE_TEST_ID")})
+    // @JoinColumn(name = "STOCK_QUOTE_TEST_ID", referencedColumnName = "ID")
     // @JsonBackReference
-    // @JoinColumn(name = "QUOTES_TEST_ID")
+    // @JoinColumn(name = "STOCK_QUOTE_TEST_ID")
+    @OneToMany
+    // @JoinColumn(name = "STOCK_QUOTE_TEST_ID")
     private List<QuotesTest> quotesTest;
 
 

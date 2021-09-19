@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.gson.annotations.SerializedName;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,22 +40,24 @@ public class QuotesTest {
     @Id
     @GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid", strategy="uuid")
-	// @Column(name="STOCK_QUOTE_ID")
     private String id;
     
-    @ElementCollection
-    // @CollectionTable(name="QUOTES", 
-    //   joinColumns = {@JoinColumn(name = "STOCK_QUOTE_ID", referencedColumnName = "STOCK_QUOTE_ID")})
-    @MapKeyColumn(name = "QUOTE_DATE")
-    @Column(name = "QUOTE_VALUE")
-    private Map<String, String> quotes;
+    // @ElementCollection
+    // @CollectionTable(name="STOCK_QUOTES", 
+    //   joinColumns = {@JoinColumn(name = "STOCK_QUOTE_TEST_ID")})
+    // @MapKeyColumn(name = "QUOTE_DATE")
+    // @Column(name = "QUOTE_VALUE")
+    // private Map<String, String> quotes;
+
+    private String date;
+
+    private String value;
 
     @ManyToOne
-    @JoinColumn(name = "stockQuoteTestId")
+    // @JoinColumn(name = "STOCK_QUOTE_TEST_ID")
+    // @JsonBackReference
     // @JsonManagedReference
-    @JsonBackReference
 
-    // @JoinColumn(name = "QUOTES_TEST_ID")
     private StockQuoteTest stockQuoteTest;
     
 }
