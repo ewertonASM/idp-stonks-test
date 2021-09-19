@@ -1,23 +1,20 @@
 package br.com.inatel.stonks.controller;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.inatel.stonks.client.StockClient;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
 import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
-import br.com.inatel.stonks.model.Quotes;
-import br.com.inatel.stonks.model.QuotesTest;
-import br.com.inatel.stonks.model.StockQuote;
 import br.com.inatel.stonks.service.StockQuoteService;
-
-import java.util.HashMap;
-
-import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("quotes")
@@ -37,12 +34,12 @@ public class StockManagerController {
     }
 
     // @GetMapping(path = "/stock")
-    // public ResponseEntity<HashMap<String, HashMap<String, String>>> findByName(@RequestParam String stockId) {
+    // public ResponseEntity<HashMap<String, HashMap<String, String>>> findByStockId(@RequestParam String stockId) {
 
             
 
     //         log.info(stockId);
-    //         return ResponseEntity.ok(stockQuoteService.findByName(stockId));
+    //         return ResponseEntity.ok(stockQuoteService.findByStockId(stockId));
     // }
 
     // @GetMapping

@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.inatel.stonks.model.Quotes;
-import br.com.inatel.stonks.model.StockQuote;
 
-public class QuoteView {
+public class StockQuoteView {
 
     public static HashMap<String, HashMap<String, String>> generateView(List<Quotes> quotes){
 

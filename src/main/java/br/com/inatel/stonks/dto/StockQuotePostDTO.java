@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.validation.constraints.NotEmpty;
 
-import br.com.inatel.stonks.model.StockQuote;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

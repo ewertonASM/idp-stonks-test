@@ -1,46 +1,41 @@
 package br.com.inatel.stonks.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
 import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
-import br.com.inatel.stonks.mapper.QuotesTestMapper;
-import br.com.inatel.stonks.mapper.StockQuoteMapper;
-import br.com.inatel.stonks.mapper.StockTestMapper;
-import br.com.inatel.stonks.model.StockQuote;
-import br.com.inatel.stonks.model.StockQuoteTest;
+import br.com.inatel.stonks.exception.BadRequestException;
+import br.com.inatel.stonks.mapper.StockMapper;
 import br.com.inatel.stonks.model.Quotes;
-import br.com.inatel.stonks.model.QuotesTest;
-import br.com.inatel.stonks.repository.QuotesRepositoryTest;
-// import br.com.inatel.stonks.repository.QuotesRepository;
-// import br.com.inatel.stonks.repository.StockRepository;
-import br.com.inatel.stonks.repository.StockRepositoryTest;
-import br.com.inatel.stonks.view.QuoteView;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-
-import com.mysql.cj.log.Log;
+import br.com.inatel.stonks.model.StockQuote;
+import br.com.inatel.stonks.repository.QuotesRepository;
+import br.com.inatel.stonks.repository.StockRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
 @Log4j2
 public class StockQuoteService {
 
-    // private final StockRepository stockRepository;
-    private final StockRepositoryTest stockRepositoryTest;
-    private final QuotesRepositoryTest quotesRepositoryTest;
-    // private final QuotesRepository quotesRepository;
+    private final StockRepository stockRepository;
+    private final QuotesRepository quotesRepository;
 
 
-    // public HashMap<String, HashMap<String, String>> findByName(String stockId) {
+    // public HashMap<String, HashMap<String, String>> findByStockId(String stockId) {
 
-    //     List<Quote> quotes = stockRepository.findByStockId(stockId);
-    //     return QuoteView.generateView(quotes);
+    //     StockQuote stockQuote = stockRepository.findByStockId(stockId).get(0);
+    //     // Quotes quotes = quotesRepository.findBy
+
+    //     if(stockQuote == null){
+    //         throw new BadRequestException("stock not found");
+    //     }
+
+
+    // //     return StockQuoteView.generateView(StockQuote, );
     // }
 
     // public HashMap<String, HashMap<String, String>> findAll() {
@@ -56,23 +51,25 @@ public class StockQuoteService {
     //     return QuoteView.generateView(quotes);
     // }
 
-    public StockQuoteResponseDTO save(StockQuotePostDTO stockQuoteDTO) {
+    public StockQuoteResponseDTO save(StockQuotePostDTO stockQuotePostDTO) {
    
-        List<StockQuoteTest> stockQuoteTestList = stockRepositoryTest.findByStockId(stockQuoteDTO.getStockId());
+        List<StockQuote> stockQuotesList = stockRepository.findByStockId(stockQuotePostDTO.getStockId());
 
-        StockQuoteTest stockQuoteTest = stockQuoteTestList.isEmpty() ? 
-                                        stockRepositoryTest.save(StockTestMapper.INSTANCE.toStockQuote(stockQuoteDTO)) : stockQuoteTestList.get(0);
+        log.info("***********************************************************************************************************************************************");
+        StockQuote stockQuote = stockQuotesList.isEmpty() ? 
+                                        stockRepository.save(StockMapper.INSTANCE.toStockQuote(stockQuotePostDTO)) : stockQuotesList.get(0);
+
         
         StockQuoteResponseDTO stockQuoteResponseDTO = StockQuoteResponseDTO.builder()
-                                                        .stockId(stockQuoteTest.getStockId())
-                                                        .id(stockQuoteTest.getId())
+                                                        .stockId(stockQuote.getStockId())
+                                                        .id(stockQuote.getId())
                                                         .quotes(new HashMap<>())
                                                         .build();
 
-        for (var entry : stockQuoteDTO.getQuotes().entrySet()) {
+        for (var entry : stockQuotePostDTO.getQuotes().entrySet()) {
 
-            QuotesTest quoteTestSaved = quotesRepositoryTest.save(QuotesTest.builder().date(entry.getKey()).value(entry.getValue()).stockQuoteTest(stockQuoteTest).build());
-            stockQuoteResponseDTO.getQuotes().put(quoteTestSaved.getDate(), quoteTestSaved.getValue());
+            Quotes quoteSaved = quotesRepository.save(Quotes.builder().date(entry.getKey()).value(entry.getValue()).stockQuote(stockQuote).build());
+            stockQuoteResponseDTO.getQuotes().put(quoteSaved.getDate(), quoteSaved.getValue());
         }
                     
         return stockQuoteResponseDTO;
