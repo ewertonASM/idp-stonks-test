@@ -1,27 +1,38 @@
 package br.com.inatel.stonks.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.inatel.stonks.model.Quotes;
+import br.com.inatel.stonks.model.StockQuote;
+import javassist.expr.NewArray;
+import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 
 public class StockQuoteView {
 
-    public static HashMap<String, HashMap<String, String>> generateView(List<Quotes> quotes){
+    public static List<StockQuoteResponseDTO> generateView(List<Quotes> quotes, List<StockQuote> stockQuotes){
+        
+        List<StockQuoteResponseDTO> stockQuotesResponseDTO = new LinkedList<StockQuoteResponseDTO>();
+        
 
-        HashMap<String, HashMap<String, String>> mapView = new HashMap<String, HashMap<String, String>>();
+        StockQuoteResponseDTO stockQuoteResponseDTO = StockQuoteResponseDTO.builder().build();
 
-        // for(StockQuote quote:quotes){
+        for(StockQuote stockQuote:stockQuotes){
 
-        //     if(!mapView.containsKey(quote.getStockId())) {
-        //         mapView.put(quote.getStockId(), new HashMap<String, String>());
-        //     }
+            stockQuoteResponseDTO = StockQuoteResponseDTO.builder()
+                                                        .stockId(stockQuote.getStockId())
+                                                        .id(stockQuote.getId())
+                                                        .quotes(new HashMap<>())
+                                                        .build();
+            for(Quotes quote:quotes){
+                stockQuoteResponseDTO.getQuotes().put(quote.getDate(), quote.getValue());
+            }
+            stockQuotesResponseDTO.add(stockQuoteResponseDTO);
+        }
 
-        //     mapView.get(quote.getStockId()).put(quote.getDate(), quote.getQuote());
-
-        // }
-
-        return mapView;
+        return stockQuotesResponseDTO;
 
     }
     

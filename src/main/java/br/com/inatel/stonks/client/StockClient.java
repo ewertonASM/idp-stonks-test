@@ -14,17 +14,15 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class StockClient {
 
-    // public static ResponseEntity<List<Stock>> stockList(){
+    
+    
+    public static StockDTO createStock(StockDTO stockDTO){
+        
+        return new RestTemplate().postForObject("http://localhost:8080/stock", stockDTO, StockDTO.class);
+      
+    }
 
-    //     ResponseEntity<List<Stock>> exchange = new RestTemplate().exchange("http://localhost:8080/stock", HttpMethod.GET, null,
-    //                         new ParameterizedTypeReference<List<Stock>>(){});
-    //     log.info(exchange.getBody());
-
-    //     return exchange;
-
-    // }
-
-    public static ResponseEntity<List<StockDTO>> stockList(){
+    public static ResponseEntity<List<StockDTO>> listStocks(){
 
         ResponseEntity<List<StockDTO>> exchange = new RestTemplate().exchange("http://localhost:8080/stock", HttpMethod.GET, null,
                             new ParameterizedTypeReference<List<StockDTO>>(){});
@@ -36,13 +34,13 @@ public class StockClient {
 
     public static StockDTO checkStock(String id){
         
-        StockDTO object = new RestTemplate().getForObject("http://localhost:8080/stock/{id}", StockDTO.class, id);
+        StockDTO stockDTO = new RestTemplate().getForObject("http://localhost:8080/stock/{id}", StockDTO.class, id);
 
-        if(object == null){
+        if(stockDTO == null){
             throw new BadRequestException("stock not found");
         }
 
-        return object;
+        return stockDTO;
 
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.inatel.stonks.client.StockClient;
+import br.com.inatel.stonks.dto.StockDTO;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
 import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 import br.com.inatel.stonks.service.StockQuoteService;
@@ -21,29 +22,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @RestController
-@RequestMapping("quotes")
-@Log4j2
+@RequestMapping("stock")
 @RequiredArgsConstructor
-public class StockManagerController {
-
-
-    private final StockQuoteService stockQuoteService;
+public class StockClientController {
 
     @PostMapping
-    public ResponseEntity<StockQuoteResponseDTO> createQuote(@RequestBody @Valid StockQuotePostDTO stockQuoteDTO) {
-        StockClient.checkStock(stockQuoteDTO.getStockId());
-        return new ResponseEntity<>(stockQuoteService.save(stockQuoteDTO), HttpStatus.CREATED);
-    }
-
-    @GetMapping(path = "/stock")
-    public ResponseEntity<List<StockQuoteResponseDTO>> findByStock(@RequestParam String stockId) {
-            return ResponseEntity.ok(stockQuoteService.findByStockId(stockId));
+    public ResponseEntity<StockDTO> createStock(@RequestBody @Valid StockDTO stockDTO) {
+        
+        return new ResponseEntity<>(StockClient.createStock(stockDTO), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<StockQuoteResponseDTO>> findAllQuotes() {
-        return ResponseEntity.ok(stockQuoteService.findAllQuotes());
-
+    public ResponseEntity<List<StockDTO>> listStocks() {
+        return StockClient.listStocks();
     }
 
 }

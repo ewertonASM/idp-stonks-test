@@ -13,6 +13,7 @@ import br.com.inatel.stonks.model.Quotes;
 import br.com.inatel.stonks.model.StockQuote;
 import br.com.inatel.stonks.repository.QuotesRepository;
 import br.com.inatel.stonks.repository.StockRepository;
+import br.com.inatel.stonks.view.StockQuoteView;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -25,39 +26,39 @@ public class StockQuoteService {
     private final QuotesRepository quotesRepository;
 
 
-    // public HashMap<String, HashMap<String, String>> findByStockId(String stockId) {
+    public List<StockQuoteResponseDTO> findByStockId(String stockId) {
 
-    //     StockQuote stockQuote = stockRepository.findByStockId(stockId).get(0);
-    //     // Quotes quotes = quotesRepository.findBy
+        List<StockQuote> stockQuotes = stockRepository.findByStockId(stockId);
 
-    //     if(stockQuote == null){
-    //         throw new BadRequestException("stock not found");
-    //     }
+        if(stockQuotes.isEmpty()){
+            throw new BadRequestException("stock not found");
+        }
 
+        List<Quotes> quotes = quotesRepository.findByStockQuoteId(stockQuotes.get(0).getId());
 
-    // //     return StockQuoteView.generateView(StockQuote, );
-    // }
+        return StockQuoteView.generateView(quotes, stockQuotes);
+        
+    }
 
-    // public HashMap<String, HashMap<String, String>> findAll() {
+    public List<StockQuoteResponseDTO> findAllQuotes() {
 
+        List<StockQuote> stockQuotes = stockRepository.findAll();
 
-    //     List<Quotes> quotes = quotesRepository.findAll();
+        if(stockQuotes.isEmpty()){
+            throw new BadRequestException("stock not found");
+        }
 
-    //     log.info("##########################################################################################");
-    //     log.info(quotes);
-    //     log.info("##########################################################################################");
+        List<Quotes> quotes = quotesRepository.findByStockQuoteId(stockQuotes.get(0).getId());
 
-
-    //     return QuoteView.generateView(quotes);
-    // }
+        return StockQuoteView.generateView(quotes, stockQuotes);
+    }
 
     public StockQuoteResponseDTO save(StockQuotePostDTO stockQuotePostDTO) {
    
         List<StockQuote> stockQuotesList = stockRepository.findByStockId(stockQuotePostDTO.getStockId());
 
-        log.info("***********************************************************************************************************************************************");
         StockQuote stockQuote = stockQuotesList.isEmpty() ? 
-                                        stockRepository.save(StockMapper.INSTANCE.toStockQuote(stockQuotePostDTO)) : stockQuotesList.get(0);
+                                        stockRepository.save(StockQuote.builder().stockId(stockQuotePostDTO.getStockId()).build()) : stockQuotesList.get(0);
 
         
         StockQuoteResponseDTO stockQuoteResponseDTO = StockQuoteResponseDTO.builder()
