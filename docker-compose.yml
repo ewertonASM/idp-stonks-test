@@ -1,7 +1,10 @@
-version: '3.1'
+version: '2.4'
+x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bootdb?createDatabaseIfNotExist=true
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: root
 services:
   db:
-    platform: linux/x86_64
     image: mysql
     container_name: stonks_mysql
     environment: 
@@ -11,12 +14,17 @@ services:
     volumes:
       - stonks_data:/var/lib/mysql
   stock-manager:
-    platform: linux/x86_64
     image: lucasvilela/stock-manager
     ports: 
       - "8080:8080"
     volumes:
       - stock_data:/var/lib/stock
+  stock-manager-inatel:
+    image: emoura/stock-manager-inatel:0.0.1-SNAPSHOT
+    ports:
+    - "8081:8081"
+    environment:
+      <<: *database-variables
 
 volumes:
   stonks_data:
