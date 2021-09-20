@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StockManagerController {
 
-
     private final StockQuoteService stockQuoteService;
 
     @PostMapping
@@ -44,4 +43,5 @@ public class StockManagerController {
 
     }
 
+  
 }
