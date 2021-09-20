@@ -29,7 +29,6 @@ public class Quotes {
     private String value;
 
     @ManyToOne
-
     private StockQuote stockQuote;
     
 }

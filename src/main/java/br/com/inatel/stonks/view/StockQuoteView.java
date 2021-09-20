@@ -1,12 +1,14 @@
 package br.com.inatel.stonks.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 import br.com.inatel.stonks.model.Quotes;
 import br.com.inatel.stonks.model.StockQuote;
+import javassist.expr.NewArray;
+import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 
 public class StockQuoteView {
 

@@ -19,8 +19,6 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class StockClient {
 
-    
-    
     public static StockDTO createStock(StockDTO stockDTO){
         
         return new RestTemplate().postForObject("http://localhost:8080/stock", stockDTO, StockDTO.class);

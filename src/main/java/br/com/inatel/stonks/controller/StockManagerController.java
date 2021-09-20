@@ -2,6 +2,7 @@ package br.com.inatel.stonks.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,7 @@ public class StockManagerController {
     private final StockQuoteService stockQuoteService;
 
     @PostMapping
+    // @Transactional
     public ResponseEntity<StockQuoteResponseDTO> createQuote(@RequestBody @Valid StockQuotePostDTO stockQuoteDTO) {
         StockClient.checkStock(stockQuoteDTO.getStockId());
         return new ResponseEntity<>(stockQuoteService.save(stockQuoteDTO), HttpStatus.CREATED);
