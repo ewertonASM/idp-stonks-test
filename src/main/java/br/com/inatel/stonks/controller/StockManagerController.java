@@ -18,11 +18,9 @@ import br.com.inatel.stonks.dto.StockQuotePostDTO;
 import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 import br.com.inatel.stonks.service.StockQuoteService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping("quotes")
-@Log4j2
 @RequiredArgsConstructor
 public class StockManagerController {
 

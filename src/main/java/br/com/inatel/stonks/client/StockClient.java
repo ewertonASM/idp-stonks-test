@@ -2,6 +2,7 @@ package br.com.inatel.stonks.client;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class StockClient {
       
     }
 
+    @Cacheable(value = "stock list")
     public static ResponseEntity<List<StockDTO>> listStocks(){
 
         ResponseEntity<List<StockDTO>> exchange = new RestTemplate().exchange("http://localhost:8080/stock", HttpMethod.GET, null,
@@ -32,6 +34,7 @@ public class StockClient {
 
     }
 
+    @Cacheable(value = "stock validation")
     public static StockDTO checkStock(String id){
         
         StockDTO stockDTO = new RestTemplate().getForObject("http://localhost:8080/stock/{id}", StockDTO.class, id);

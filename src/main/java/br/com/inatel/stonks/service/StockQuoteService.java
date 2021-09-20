@@ -8,18 +8,15 @@ import org.springframework.stereotype.Service;
 import br.com.inatel.stonks.dto.StockQuotePostDTO;
 import br.com.inatel.stonks.dto.StockQuoteResponseDTO;
 import br.com.inatel.stonks.exception.BadRequestException;
-import br.com.inatel.stonks.mapper.StockMapper;
 import br.com.inatel.stonks.model.Quotes;
 import br.com.inatel.stonks.model.StockQuote;
 import br.com.inatel.stonks.repository.QuotesRepository;
 import br.com.inatel.stonks.repository.StockRepository;
 import br.com.inatel.stonks.view.StockQuoteView;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class StockQuoteService {
 
     private final StockRepository stockRepository;
